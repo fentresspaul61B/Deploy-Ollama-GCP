@@ -13,6 +13,7 @@
 
 
 # Stage 1: Builder stage to download the model
+# Stage 1: Builder stage to download the model
 FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime as builder
 
 WORKDIR /app
@@ -31,9 +32,12 @@ RUN ollama serve & \
     ollama pull deepseek-r1:7b && \
     pkill -f 'ollama serve'
 
-RUN ollama ps
+# Stage 2: Final runtime stage
 FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime
+
 WORKDIR /app
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -47,3 +51,4 @@ COPY generate_text.py .
 
 EXPOSE 8080
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+
