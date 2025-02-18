@@ -5,6 +5,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update && apt-get install -y curl
 # need to install curl in order to use curl command to download Ollama.
 RUN curl -fsSL https://ollama.com/install.sh | sh
+RUN ollama serve
 RUN ollama pull deepseek-r1:7b
 COPY main.py .
 COPY generate_text.py .
