@@ -52,7 +52,6 @@
 # EXPOSE 8080
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
 
-
 # Stage 1: Builder stage to download the model
 FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime as builder
 
@@ -82,7 +81,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the pre-downloaded model files from the builder stage.
-# (Adjust the source path if Ollama uses a different directory)
 COPY --from=builder /root/.ollama/models/ /root/.ollama/models/
 
 # Copy your application code
