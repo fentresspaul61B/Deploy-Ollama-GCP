@@ -1,16 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "Starting Ollama service..."
+# Start the Ollama service in the background
 ollama serve &
-OLLAMA_PID=$!
 
-# Wait for Ollama to be available on port 11434
-echo "Waiting for Ollama to start..."
-# Loop until nc (netcat) confirms that port 11434 is listening
-while ! nc -z 127.0.0.1 11434; do
-  sleep 1
-done
+# Wait a few seconds to ensure Ollama is up and running
+sleep 5
 
-echo "Ollama service is up; starting uvicorn..."
+# Start the uvicorn server (this replaces the shell process)
 exec uvicorn main:app --host 0.0.0.0 --port 8080
