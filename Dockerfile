@@ -53,6 +53,7 @@
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
 
 # Stage 1: Builder stage to download the model
+# Stage 1: Builder stage to download the model
 FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime as builder
 
 WORKDIR /app
@@ -76,9 +77,10 @@ FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime
 
 WORKDIR /app
 
-# Install Python dependencies
+# Install Python dependencies and netcat for checking the port
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    apt-get update && apt-get install -y netcat
 
 # Copy the pre-downloaded model files from the builder stage.
 COPY --from=builder /root/.ollama/models/ /root/.ollama/models/
@@ -93,7 +95,7 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
-# Use the entrypoint script to start Ollama and uvicorn
 ENTRYPOINT ["/entrypoint.sh"]
+
 
 
