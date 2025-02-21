@@ -53,8 +53,8 @@ jobs:
             --region ${{ env.REGION }} \
             --set-env-vars OLLAMA_NUM_PARALLEL=4 \
             --no-allow-unauthenticated \
-            --cpu 4 \
-            --memory 16Gi \
+            --cpu 8 \
+            --memory 32Gi \
             --timeout 600 \
             --gpu 1 \
             --gpu-type nvidia-l4 \
