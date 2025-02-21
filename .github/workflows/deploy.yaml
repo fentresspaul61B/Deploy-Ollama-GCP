@@ -50,9 +50,9 @@ jobs:
         run: |
           gcloud beta run deploy ${{ env.SERVICE_NAME }} \
             --image gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
-            --set-env-vars OLLAMA_NUM_PARALLEL=4
-            --no-allow-unauthenticated
             --region ${{ env.REGION }} \
+            --set-env-vars OLLAMA_NUM_PARALLEL=4 \
+            --no-allow-unauthenticated \
             --cpu 4 \
             --memory 16Gi \
             --timeout 600 \
