@@ -58,5 +58,5 @@ jobs:
             --timeout 600 \
             --gpu 1 \
             --gpu-type nvidia-l4 \
-            --max-instances 1 \
+            --max-instances 3 \
             --quiet
