@@ -6,6 +6,11 @@ import uvicorn
 app = FastAPI()
 
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
 @app.post("/chat")
 async def chat(text: str, role: str = "user", model: str = MODEL):
     """Uses ollama model to generate text."""
