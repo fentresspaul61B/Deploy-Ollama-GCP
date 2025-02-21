@@ -50,10 +50,12 @@ jobs:
         run: |
           gcloud beta run deploy ${{ env.SERVICE_NAME }} \
             --image gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
+            --set-env-vars OLLAMA_NUM_PARALLEL=4
+            --no-allow-unauthenticated
             --region ${{ env.REGION }} \
             --cpu 4 \
             --memory 16Gi \
-            --timeout 360 \
+            --timeout 600 \
             --gpu 1 \
             --gpu-type nvidia-l4 \
             --max-instances 1 \
